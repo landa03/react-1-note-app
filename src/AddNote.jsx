@@ -31,9 +31,10 @@ function AddNote() {
   const [modalTitle, setModalTitle] = useState("");
   
   const [notesArray, setNotesArray] = useState([]);
-
+  
   const modalTextArea = useRef(null);
-
+  
+  let noteIndex = 0
   function createNote() {
     // TODO: useRef (es un hook de react) v
     // newNoteText = modalTextArea.current.value;
@@ -41,11 +42,8 @@ function AddNote() {
       notes[editingNoteId] = modalTextArea.current.value;
       onClose();
     }else{
-      // TODO : actualizar el value al estilo react
-      // notes.push(modalTextArea.current.value);  
-      let noteIndex = 0
-      setNotesArray([...notesArray, {id: noteIndex++, textContent: modalTextArea.current.value}])
-      modalTextArea.current.value = '';
+      setNotesArray([...notesArray, {index: noteIndex++, content: modalTextArea.current.value}])
+      modalTextArea.current.value = ''
     }
     setNoteState(noteState + 1);
   }
@@ -54,8 +52,22 @@ function AddNote() {
     //remainder: react controla html
     //TODO: shadowDom
     // noteButton.deleteElements;
-    notes.splice(noteIndex,1);
-    setNoteState(noteState + 1);
+    // notes.splice(noteIndex,1);
+    // setNoteState(noteState + 1);
+    
+    setNoteState(
+
+      notesArray.filter(noteIndex =>
+        noteIndex !== notesArray.index
+        // notesArray.index !== noteIndex
+      )
+    )
+
+    // setNotesArray(notesArray.slice(noteIndex+1, noteIndex+notesArray.length))  slice nomas deja lo seleccionado
+    console.warn(notesArray)
+    // console.warn(notesArray.filter(a =>
+      // a.index !== notesArray.index
+    // ))
   }
   
   // todo: identificar si es index o id
@@ -79,13 +91,16 @@ function AddNote() {
   return(
     <>
 
-      {notes.map((notesArray, index) =>(
+      {notesArray.map((notesArray, index) =>(
         <div className='newDivCard'>
           <Card>
             <CardBody>
               <div className='newDiv'>
                 <p>
-                  {notes[index]}
+                  {/* {notesArray[index]} */}
+                  {/* {notesArray[index].textContent} */}
+                  {notesArray.content}
+                  {/* {index} */}
                 </p>
                 <div className='newDivBtns'>
                   <button onClick={() => openModal(true, index)}><img src="../asets/edit-icon.png" alt="Edit" /></button>
