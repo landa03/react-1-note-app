@@ -19,7 +19,7 @@ import { useDisclosure } from '@chakra-ui/react'
 
 
 let notes = [];
-let newNoteText = ''
+// let newNoteText = ''
 
 let isEditor = false;
 // let modalTitle = "";
@@ -29,19 +29,23 @@ function AddNote() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [noteState, setNoteState] = useState(0);
   const [modalTitle, setModalTitle] = useState("");
+  
+  const [notesArray, setNotesArray] = useState([]);
 
   const modalTextArea = useRef(null);
 
   function createNote() {
-    // TODO: useRef (es un hook de react)
-    newNoteText = modalTextArea.current.value;
+    // TODO: useRef (es un hook de react) v
+    // newNoteText = modalTextArea.current.value;
     if (isEditor) {
-      notes[editingNoteId] = newNoteText;
+      notes[editingNoteId] = modalTextArea.current.value;
       onClose();
     }else{
       // TODO : actualizar el value al estilo react
+      // notes.push(modalTextArea.current.value);  
+      let noteIndex = 0
+      setNotesArray([...notesArray, {id: noteIndex++, textContent: modalTextArea.current.value}])
       modalTextArea.current.value = '';
-      notes.push(newNoteText);  
     }
     setNoteState(noteState + 1);
   }
@@ -75,7 +79,7 @@ function AddNote() {
   return(
     <>
 
-      {notes.map((note, index) =>(
+      {notes.map((notesArray, index) =>(
         <div className='newDivCard'>
           <Card>
             <CardBody>
@@ -133,7 +137,7 @@ export default AddNote
   se habre el modal modificado para editar  - - - - v
   se edita el texto de la nota  - - - - - - - - - - v
 R1
-  useRef (es un hook de react)  - - - - - - - - - - T
+  useRef (es un hook de react)  - - - - - - - - - - v
   actualizar el value al estilo react - - - - - - - T
   shadowDom - - - - - - - - - - - - - - - - - - - - T
   cambiar con react - - - - - - - - - - - - - - - - T
