@@ -21,32 +21,32 @@ import { useDisclosure } from '@chakra-ui/react'
 let notes = [];
 // let newNoteText = ''
 
-let isEditor = false;
 // let modalTitle = "";
-let editingNoteId;
 
 function AddNote() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [noteState, setNoteState] = useState(0);
   const [modalTitle, setModalTitle] = useState("");
-  
   const [notesArray, setNotesArray] = useState([]);
-  
   const modalTextArea = useRef(null);
-  
+  const [isEditor, setIsEditor] = useState();
+  const [modalTextAreaText, setModalTextAreaText] = useState("");
+  const [editingNoteId, setEditingNoteId] = useState(0);
+
   let noteIndex = 0
   function createNote() {
     // TODO: useRef (es un hook de react) v
     // newNoteText = modalTextArea.current.value;
     if (isEditor) {
-      notes[editingNoteId] = modalTextArea.current.value;
+      notesArray[editingNoteId].content = modalTextArea.current.value;
       onClose();
     }else{
-      setNotesArray([...notesArray, {index: noteIndex++, content: modalTextArea.current.value}])
-      modalTextArea.current.value = ''
+      setNotesArray([...notesArray, {index: noteIndex++, content: modalTextArea.current.value}]);
+      modalTextArea.current.value = '';
     }
     setNoteState(noteState + 1);
   }
+
   
   function removeNote(noteIndex) {
     //remainder: react controla html
@@ -55,37 +55,35 @@ function AddNote() {
     // notes.splice(noteIndex,1);
     // setNoteState(noteState + 1);
     
-    setNoteState(
+    let arrSlice1 = notesArray.slice(0, noteIndex);
+    let arrSlice2 = notesArray.slice(noteIndex+1, notesArray.length);
 
-      notesArray.filter(noteIndex =>
-        noteIndex !== notesArray.index
-        // notesArray.index !== noteIndex
-      )
+
+    setNotesArray(
+      arrSlice1.concat(arrSlice2)  
     )
-
-    // setNotesArray(notesArray.slice(noteIndex+1, noteIndex+notesArray.length))  slice nomas deja lo seleccionado
-    console.warn(notesArray)
-    // console.warn(notesArray.filter(a =>
-      // a.index !== notesArray.index
-    // ))
   }
   
-  // todo: identificar si es index o id
-  function openModal(isEditorButton, noteId) {
-    isEditor = isEditorButton;
-    if (isEditor) {
-      editingNoteId = noteId;
+  // todo: identificar si es index o id   - v
+  function openModal(isEditorButton, noteIndex) {
+    setIsEditor(isEditorButton);
+    // let modalTextAreaText = ""
+    if (isEditorButton) {
+      setEditingNoteId(noteIndex);
       // modalTitle = "Edit note"
       setModalTitle("Edit note");
-      // TODO: cambiar con react
-      setTimeout(() => {
-        modalTextArea.current.value = notes[noteId];
-      }, 10);
+      // TODO: cambiar con react  - - - - v
+      setModalTextAreaText(notesArray[noteIndex].content);
+      // setTimeout(() => {
+        // modalTextArea.current.value = notesArray[noteIndex].content;
+      // }, 10);
     }else{
       // modalTitle = "Create note"
+      setModalTextAreaText("");
       setModalTitle("Create note");
     }
     onOpen();
+    // modalTextArea.current.value = modalTextAreaText
   }
 
   return(
@@ -105,6 +103,7 @@ function AddNote() {
                 <div className='newDivBtns'>
                   <button onClick={() => openModal(true, index)}><img src="../asets/edit-icon.png" alt="Edit" /></button>
                   <button onClick={() => removeNote(index)}><img src="../asets/delete-icon.png" alt="Delete" /></button>
+                  {/* <button onClick={() => {setNotesArray(notesArray.filter(a => a.index !== notesArray.index))}}><img src="../asets/delete-icon.png" alt="Delete" /></button> */}
                 </div>
               </div>
             </CardBody>
@@ -129,7 +128,7 @@ function AddNote() {
             <ModalHeader>{modalTitle}</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              <textarea ref={modalTextArea} id='new-note-text-area'></textarea>
+              <textarea ref={modalTextArea} id='new-note-text-area'>{modalTextAreaText}</textarea>
             </ModalBody>
             <ModalFooter>
               <button variant='ghost' onClick={createNote}>{modalTitle}!</button>
@@ -153,8 +152,8 @@ export default AddNote
   se edita el texto de la nota  - - - - - - - - - - v
 R1
   useRef (es un hook de react)  - - - - - - - - - - v
-  actualizar el value al estilo react - - - - - - - T
+  actualizar el value al estilo react - - - - - - - v
   shadowDom - - - - - - - - - - - - - - - - - - - - T
-  cambiar con react - - - - - - - - - - - - - - - - T
+  cambiar con react - - - - - - - - - - - - - - - - v
   ...???
   */}
