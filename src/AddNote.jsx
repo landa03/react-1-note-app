@@ -1,4 +1,4 @@
-import { cloneElement, useState, useRef } from 'react'
+import React, { cloneElement, useState, useRef } from 'react'
 // import { ChakraProvider } from '@chakra-ui/react'
 import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
 
@@ -88,28 +88,25 @@ function AddNote() {
 
   return(
     <>
+      {/* {notesArray.map((notesArray, index) =>(
+         <div className='newDivCard'>
+           <Card>
+             <CardBody>
+               <div className='newDiv'>
+                 <p>
+                   {notesArray.content}
+                 </p>
+                 <div className='newDivBtns'>
+                   <button onClick={() => openModal(true, index)}><img src="../asets/edit-icon.png" alt="Edit" /></button>
+                   <button onClick={() => removeNote(index)}><img src="../asets/delete-icon.png" alt="Delete" /></button>
+                 </div>
+               </div>
+             </CardBody>
+           </Card>
+         </div>
+       ))} */}
 
-      {notesArray.map((notesArray, index) =>(
-        <div className='newDivCard'>
-          <Card>
-            <CardBody>
-              <div className='newDiv'>
-                <p>
-                  {/* {notesArray[index]} */}
-                  {/* {notesArray[index].textContent} */}
-                  {notesArray.content}
-                  {/* {index} */}
-                </p>
-                <div className='newDivBtns'>
-                  <button onClick={() => openModal(true, index)}><img src="../asets/edit-icon.png" alt="Edit" /></button>
-                  <button onClick={() => removeNote(index)}><img src="../asets/delete-icon.png" alt="Delete" /></button>
-                  {/* <button onClick={() => {setNotesArray(notesArray.filter(a => a.index !== notesArray.index))}}><img src="../asets/delete-icon.png" alt="Delete" /></button> */}
-                </div>
-              </div>
-            </CardBody>
-          </Card>
-        </div>
-      ))}
+      <div id='notes_div'></div>
 
       <div className='add_note_div'>
         <Card>
