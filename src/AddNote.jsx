@@ -1,7 +1,9 @@
-import React, { cloneElement, useState, useRef } from 'react'
-import React, { createRoot } from 'react-dom/client'
+import React, { useState, useRef } from 'react';
+// import React, { createRoot } from 'react-dom/client'
 // import { ChakraProvider } from '@chakra-ui/react'
-import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
+import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react';
+import ReactShadowRoot from 'react-shadow-root';
+import root from 'react-shadow';
 
 // import NoteElement from "./NoteElement.jsx";
 
@@ -61,8 +63,8 @@ function AddNote() {
 
 
     setNotesArray(
-      arrSlice1.concat(arrSlice2)  
-    )
+      arrSlice1.concat(arrSlice2)
+    );
   }
   
   // todo: identificar si es index o id   - v
@@ -89,29 +91,33 @@ function AddNote() {
 
   return(
     <>
-      {/* {notesArray.map((notesArray, index) =>(
-         <div className='newDivCard'>
-           <Card>
-             <CardBody>
-               <div className='newDiv'>
-                 <p>
-                   {notesArray.content}
-                 </p>
-                 <div className='newDivBtns'>
-                   <button onClick={() => openModal(true, index)}><img src="../asets/edit-icon.png" alt="Edit" /></button>
-                   <button onClick={() => removeNote(index)}><img src="../asets/delete-icon.png" alt="Delete" /></button>
-                 </div>
-               </div>
-             </CardBody>
-           </Card>
-         </div>
-       ))} */}
+      {notesArray.map((notesArray, index) =>(
+        <div className='newDivCard'>
+          <Card>
+            <CardBody>
+              <div className='newDiv'>
+                {/* el estilo no se aplica al shadow dom */}
+                <root.div mode='open'>{/*  */}
+                  <p>
+                    {notesArray.content}
+                  </p>
+                </root.div>
+                <div className='newDivBtns'>
+                  <button onClick={() => openModal(true, index)}><img src="../asets/edit-icon.png" alt="Edit" /></button>
+                  <button onClick={() => removeNote(index)}><img src="../asets/delete-icon.png" alt="Delete" /></button>
+                </div>
+              </div>
+            </CardBody>
+          </Card>
+        </div>
+      ))}
 
-      <div id='notes_div'></div>
+      {/* <div id='notes_div'></div> */}
 
       <div className='add_note_div'>
         <Card>
           <CardBody>
+            {/* <button className='add_note_button' onClick={() => openModal(false)}> */}
             <button className='add_note_button' onClick={() => openModal(false)}>
               <img src="../asets/plus-icon.png" alt="+" />
             </button>
@@ -136,7 +142,7 @@ function AddNote() {
       </div>
 
     </>
-  )
+  );
 }
 
 export default AddNote
