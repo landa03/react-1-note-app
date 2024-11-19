@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 // import React, { createRoot } from 'react-dom/client'
 // import { ChakraProvider } from '@chakra-ui/react'
 import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react';
-import ReactShadowRoot from 'react-shadow-root';
+// import ReactShadowRoot from 'react-shadow-root';
 import root from 'react-shadow';
 
 // import NoteElement from "./NoteElement.jsx";
@@ -19,7 +19,6 @@ import {
 
 import { useDisclosure } from '@chakra-ui/react'
 // import { delay } from 'framer-motion';
-
 
 let notes = [];
 // let newNoteText = ''
@@ -98,7 +97,9 @@ function AddNote() {
               <div className='newDiv'>
                 {/* el estilo no se aplica al shadow dom */}
                 <root.div mode='open'>{/*  */}
-                  <p>
+                  <p style={{
+                    color: 'red', 
+                  }}>
                     {notesArray.content}
                   </p>
                 </root.div>
