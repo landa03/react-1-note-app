@@ -95,14 +95,9 @@ function AddNote() {
           <Card>
             <CardBody>
               <div className='newDiv'>
-                {/* el estilo no se aplica al shadow dom */}
-                <root.div mode='open'>{/*  */}
-                  <p style={{
-                    color: 'red', 
-                  }}>
-                    {notesArray.content}
-                  </p>
-                </root.div>
+                <p>
+                  {notesArray.content}
+                </p>
                 <div className='newDivBtns'>
                   <button onClick={() => openModal(true, index)}><img src="../asets/edit-icon.png" alt="Edit" /></button>
                   <button onClick={() => removeNote(index)}><img src="../asets/delete-icon.png" alt="Delete" /></button>
